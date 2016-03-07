@@ -1,6 +1,6 @@
-<h1>qgis2web</h1>
+<h1>time2web</h1>
 <p>QGIS plugin to export your project to an OpenLayers 3 or Leaflet webmap. No
-server-side software required.</p>
+server-side software required. For Leaflet is added posibility to add time axis and select columns with datetime information.</p>
 
 <h2>Installation</h2>
 <ul>
@@ -23,7 +23,7 @@ your webmap. Specific tasks you can carry out to improve your webmap include:
     <li>Give your layer columns human friendly names via <code>Layer >
     Properties > Fields > Alias</code></li>
 </ul>
-<p>Run qgis2web from the Web menu, or via its icon. If required, choose a
+<p>Run time2web from the Web menu, or via its icon. If required, choose a
 basemap from the list below the preview pane, and click "Update preview".
 CTRL/CMD-click for multiple basemaps.</p>
 <p>The top-left pane lets you set options for each layer in your map. The
@@ -32,13 +32,13 @@ project, so save your proejct if you want to keep these settings.</p>
 
 <h2>Current limitations</h2>
 <p>QGIS, OpenLayers 3, and Leaflet are all different mapping technologies.
-This means that their respective functionality differs in many ways. qgis2web
+This means that their respective functionality differs in many ways. time2web
 does its best to interpret a QGIS project and to export HTML, Javascript, and
 CSS to create a web map as close to the QGIS project as possible.</p>
 <p>However, many elements of a QGIS project cannot be reproduced, and many are
-only possible in <em>either</em> OpenLayers 3 <em>or</em> Leaflet. qgis2web
+only possible in <em>either</em> OpenLayers 3 <em>or</em> Leaflet. time2web
 tries its best to produce a publish-ready map, but you can always manually edit
-the output code to achieve what qgis2web cannot.</p>
+the output code to achieve what time2web cannot.</p>
 <ul>
     <li>no rule-based rendering</li>
     <li>SVG point markers sometimes do not appear in the preview
@@ -49,12 +49,20 @@ the output code to achieve what qgis2web cannot.</p>
     <li>line style (dashed/dotted) does not appear in OL3 preview, but works in
         export</li>
     <li>Leaflet cannot label lines and polygons, only points</li>
+    <li>OL3 cannot use time axis</li>
+    <li>Time cannot be used with categorised layers</li>
 </ul>
 
 <h3>Layer options</h3>
 <dl>
     <dt>Info popup content</dt>
         <dd>Select which fields will appear in popups when features are clicked
+        </dd> 
+    <dt>Time from</dt>
+        <dd>Field with datetime information as integer value in form yyyymmddhhiiss. Short form of datetime is possible as well fopr example just year: 2016.
+        </dd> 
+    <dt>Time to</dt>
+        <dd>Field with datetime information as integer value in form yyyymmddhhiiss. Short form of datetime is possible as well fopr example just year: 2016.
         </dd> 
     <dt>Visible</dt>
         <dd>Select whether the layer will be visible on map load. This only
@@ -69,6 +77,14 @@ the output code to achieve what qgis2web cannot.</p>
 </dl>
 
 <h3>General options</h3>
+
+<h4>Time axis</h4>
+<dl>
+    <dt>Min</dt>
+        <dd>Starting datetime of the time axis</dd>
+    <dt>Max</dt>
+        <dd>Ending datetime of the time axis</dd>
+</dl>
 
 <h4>Data export</h4>
 <dl>
@@ -126,7 +142,7 @@ the output code to achieve what qgis2web cannot.</p>
 </dl>
 
 <h2>Reporting bugs</h2>
-<p>Please report any problems you have with qgis2web. Without this feedback, I
+<p>Please report any problems you have with time2web. Without this feedback, I
 am often completely unaware that a problem exists. To ensure no time or effort
 is wasted in bug reporting, please follow these steps:</p>
 <ol>
@@ -138,27 +154,25 @@ is wasted in bug reporting, please follow these steps:</p>
         especially by reducing the number of layers, ideally to one</li>
     <li>Raise a Github issue, including:
     <ul>
-        <li>the qgis2web version (or make it clear you are using Github master
+        <li>the time2web version (or make it clear you are using Github master
             branch)</li>
         <li>any Python error text/stack trace which occurs</li>
-        <li>browser JS console errors - press F12 in qgis2web to open the 
+        <li>browser JS console errors - press F12 in time2web to open the 
             developer toolbar and find the console</li>
         <li>screenshot of your settings</li>
         <li>screenshot of the output</li>
         <li>a link to the data you used, if possible</li>
     </ul></li>
 </ol>
-<p>The stability of qgis2web relies on your bug reports, so please keep them
+<p>The stability of time2web relies on your bug reports, so please keep them
 coming.</p>
 
 <h2>Credits</h2>
-<p>qgis2web is fundamentally a merge of Victor Olaya's qgis-ol3 and Riccardo
-Klinger's qgis2leaf. It would not exist without their work. Thank you,
-gentlemen. Thanks are also very much due to Paolo Cavallini, who suggested
-and supported the merge.</p>
+<p>time2web is derived from qgis2web</p>
 
 <ul>
     <li>github.com/volaya</li>
     <li>github.com/riccardoklinger</li>
     <li>github.com/pcav</li>
+    <li>github.com/tomchadwin</li>
 </ul>

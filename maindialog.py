@@ -693,7 +693,7 @@ class TreeSettingItem(QTreeWidgetItem):
             self.combo.currentIndexChanged.connect(dlg.saveComboSettings)
         elif isinstance(value, int):
             self.lineedit = QLineEdit()
-            self.lineedit.setFixedWidth(10)
+            self.lineedit.setFixedWidth(100)
             self.lineedit.setMaximumWidth(20)
             self.lineedit.setText(str(value))
             self.tree.setItemWidget(self, 1, self.lineedit)
