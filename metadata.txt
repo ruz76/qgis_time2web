@@ -1,0 +1,36 @@
+# This file contains metadata for your plugin. Beginning
+# with version 1.8 this is the preferred way to supply information about a
+# plugin. The current method of embedding metadata in __init__.py will
+# be supported until version 2.0
+
+# This file should be included when you package your plugin.
+
+# Mandatory items:
+
+
+[general]
+name=time2web
+qgisMinimumVersion=2.4
+description=Export to an OpenLayers 3/Leaflet webmap
+about=time2web generates a web map from your current time project, either as OpenLayers3 or Leaflet. It replicates as many aspects of the project as it can, including layers, styles (including categorized and graduated), and extent. For Leaflet is added prosibility to add time axis and select columns with datetime information. Date time information must be provided as integer value in form yyyymmddhhiiss. Short form of datetime is possible as well fopr example just year: 2016.  The plugin is derived from qgis2web plugin.
+version=0.0.1
+author=Jan Ruzicka
+email=jan.ruzicka.vsb@gmail.com
+
+# end of mandatory metadata
+
+# Optional items:
+
+# Uncomment the following line and add your changelog entries:
+# tags are comma separated with spaces allowed
+tags=time,web,webmap,webmaps,Leaflet,OpenLayers,OL3,HTML,Javascript,CSS,export
+
+homepage=http://gis.vsb.cz/ruzicka/time/
+repository=https://github.com/ruz76/qgis_time2web/
+icon=time2web.png
+# experimental flag
+experimental=False
+
+# deprecated flag (applies to the whole plugin, not just a single version
+deprecated=False
+
