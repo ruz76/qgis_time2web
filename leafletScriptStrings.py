@@ -283,8 +283,8 @@ def pointStyleLabelScript(safeLayerName, radius, borderWidth, borderStyle,
 				s['fillOpacity'] = 0.0;
 			}
 			return s;
-           }"""
-    pointStyleLabel += """
+           """
+    pointStyleLabel += """}}
         function doPointToLayer{safeLayerName}(feature, latlng) {{
             return L.circleMarker(latlng, doStyle{safeLayerName}(feature)){labeltext}
         }}""".format(safeLayerName=safeLayerName, radius=radius,

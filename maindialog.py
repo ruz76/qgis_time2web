@@ -59,7 +59,7 @@ class MainDialog(QDialog, Ui_MainDialog):
         self.paramsTreeOL.setSelectionMode(QAbstractItemView.SingleSelection)
         self.populate_layers_and_groups(self)
         self.populateConfigParams(self)
-        self.populateMinMax()
+        #self.populateMinMax()
         self.populateBasemaps()
         self.selectMapFormat()
         self.toggleOptions()
@@ -171,7 +171,7 @@ class MainDialog(QDialog, Ui_MainDialog):
         global selectedCombo, projectInstance
         if selectedCombo != "None":
             projectInstance.writeEntry("qgis2web", selectedCombo, value)
-    
+
     def saveLineeditSettings(self, value):
         #global projectInstance
         global selectedLineedit, projectInstance
@@ -185,21 +185,21 @@ class MainDialog(QDialog, Ui_MainDialog):
         if selectedLayerCombo != "None":
             selectedLayerCombo.setCustomProperty("qgis2web/Info popup content",
                                                  value)
-    
+
     def saveLayerTimeFromComboSettings(self, value):
         global selectedLayerCombo
         if selectedLayerCombo != "None":
             selectedLayerCombo.setCustomProperty("qgis2web/Time from",
                                                  value)
             self.populateMinMax()
-                                                             
+
     def saveLayerTimeToComboSettings(self, value):
         global selectedLayerCombo
         if selectedLayerCombo != "None":
             selectedLayerCombo.setCustomProperty("qgis2web/Time to",
                                                  value)
             self.populateMinMax()
-                                         
+
     def populate_layers_and_groups(self, dlg):
         """Populate layers on QGIS into our layers and group tree view."""
         root_node = QgsProject.instance().layerTreeRoot()
@@ -240,31 +240,32 @@ class MainDialog(QDialog, Ui_MainDialog):
             item = self.layers_item.child(i)
             if item.checkState(0) != Qt.Checked:
                 item.setExpanded(False)
-    
+
     #ruzicka
-    #TODO 
+    #TODO
     def populateMinMax(self):
         global projectInstance
-        min = 10000;
+        min = sys.maxint;
         max = 0;
         root_node = QgsProject.instance().layerTreeRoot()
         tree_layers = root_node.findLayers()
         for tree_layer in tree_layers:
             layer = tree_layer.layer()
             if layer.type() == QgsMapLayer.VectorLayer:
-                for feat in layer.getFeatures():
-                    attrs = feat.attributes()
-                    attr = int(attrs[int(layer.customProperty("qgis2web/Time from")) - 1])
-                    if attr < min:
-                        min = attr
-                    attr2 = int(attrs[int(layer.customProperty("qgis2web/Time to")) - 1])
-                    if attr2 > max:
-                        max = attr2
+                if layer.customProperty("qgis2web/Time from") is not None and layer.customProperty("qgis2web/Time to") is not None and layer.customProperty("qgis2web/Time from") is not QPyNullVariant and layer.customProperty("qgis2web/Time to") is not QPyNullVariant:
+                    for feat in layer.getFeatures():
+                        attrs = feat.attributes()
+                        attr = int(attrs[int(layer.customProperty("qgis2web/Time from")) - 1])
+                        if attr < min:
+                            min = attr
+                        attr2 = int(attrs[int(layer.customProperty("qgis2web/Time to")) - 1])
+                        if attr2 > max:
+                            max = attr2
                     #attr = attrs[2]
                     #print str(attr)
                     #print str(layer.customProperty("qgis2web/Time from"))
         #print str(min)
-        #print str(max)    
+        #print str(max)
         projectInstance.writeEntry("qgis2web", "Min", min)
         projectInstance.writeEntry("qgis2web", "Max", max)
         self.items["Time axis"]["Min"].lineedit.setText(str(min))
@@ -320,7 +321,9 @@ class MainDialog(QDialog, Ui_MainDialog):
                 #print """GROUP: """ + str(group)
                 #print """PARAM: """ + str(param)
             self.paramsTreeOL.addTopLevelItem(item)
-            item.sortChildren(0, Qt.AscendingOrder)
+            #print """GROUP: """ + str(group)
+            if group != "Time axis":
+                item.sortChildren(0, Qt.AscendingOrder)
         self.paramsTreeOL.expandAll()
         self.paramsTreeOL.resizeColumnToContents(0)
         self.paramsTreeOL.resizeColumnToContents(1)
@@ -524,7 +527,7 @@ class TreeLayerItem(QTreeWidgetItem):
             self.combo.highlighted.connect(self.clickCombo)
             self.combo.currentIndexChanged.connect(dlg.saveLayerComboSettings)
             tree.setItemWidget(self.popupItem, 1, self.combo)
-            
+
             #TODO
             #Remove no int or string fields or later handle other types
             self.timeFromItem = QTreeWidgetItem(self)
@@ -542,7 +545,7 @@ class TreeLayerItem(QTreeWidgetItem):
             self.timeFromCombo.highlighted.connect(self.clickCombo)
             self.timeFromCombo.currentIndexChanged.connect(dlg.saveLayerTimeFromComboSettings)
             tree.setItemWidget(self.timeFromItem, 1, self.timeFromCombo)
-            
+
             self.timeToItem = QTreeWidgetItem(self)
             self.timeToItem.setText(0, "Time to")
             self.timeToCombo = QComboBox()
@@ -558,7 +561,7 @@ class TreeLayerItem(QTreeWidgetItem):
             self.timeToCombo.highlighted.connect(self.clickCombo)
             self.timeToCombo.currentIndexChanged.connect(dlg.saveLayerTimeToComboSettings)
             tree.setItemWidget(self.timeToItem, 1, self.timeToCombo)
-            
+
         self.visibleItem = QTreeWidgetItem(self)
         self.visibleCheck = QCheckBox()
         if layer.customProperty("qgis2web/Visible") == 0:
@@ -601,7 +604,7 @@ class TreeLayerItem(QTreeWidgetItem):
             popup = utils.NO_POPUP
         #print str(popup)
         return popup
-    
+
     @property
     def timefrom(self):
         try:
@@ -616,7 +619,7 @@ class TreeLayerItem(QTreeWidgetItem):
             timefrom = utils.NO_TIME
         #print str(timefrom)
         return timefrom
-    
+
     @property
     def timeto(self):
         try:
