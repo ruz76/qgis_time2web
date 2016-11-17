@@ -2,6 +2,8 @@
 <p>QGIS plugin to export your project to an OpenLayers 3 or Leaflet webmap. No
 server-side software required. For Leaflet is added posibility to add time axis and select columns with datetime information.</p>
 
+<a href="http://gisak.vsb.cz/ruzicka/time/">Sample output</a>
+
 <h2>Installation</h2>
 <ul>
     <li>In QGIS, select <code>Plugins > Manage and Install Plugins...</code></li>
